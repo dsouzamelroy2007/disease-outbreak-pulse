@@ -1,18 +1,28 @@
 package com.tracker.app.model;
 
-public class ReportingLocationStatistics implements Comparable<ReportingLocationStatistics>{
+public class ReportingLocationStatistics implements Comparable<ReportingLocationStatistics> {
 
+    private Disease disease;
     private String state;
     private String country;
-    private int latestTotalCases;
-    private int diffFromPrevDay;
+    private long latestTotalCases;
+    private Integer diffFromPrevPeriod;
+    private String asOfDate;
 
-    public int getDiffFromPrevDay() {
-        return diffFromPrevDay;
+    public Disease getDisease() {
+        return disease;
     }
 
-    public void setDiffFromPrevDay(int diffFromPrevDay) {
-        this.diffFromPrevDay = diffFromPrevDay;
+    public void setDisease(Disease disease) {
+        this.disease = disease;
+    }
+
+    public Integer getDiffFromPrevPeriod() {
+        return diffFromPrevPeriod;
+    }
+
+    public void setDiffFromPrevPeriod(Integer diffFromPrevPeriod) {
+        this.diffFromPrevPeriod = diffFromPrevPeriod;
     }
 
     public String getState() {
@@ -31,26 +41,36 @@ public class ReportingLocationStatistics implements Comparable<ReportingLocation
         this.country = country;
     }
 
-    public int getLatestTotalCases() {
+    public long getLatestTotalCases() {
         return latestTotalCases;
     }
 
-    public void setLatestTotalCases(int latestTotalCases) {
+    public void setLatestTotalCases(long latestTotalCases) {
         this.latestTotalCases = latestTotalCases;
+    }
+
+    public String getAsOfDate() {
+        return asOfDate;
+    }
+
+    public void setAsOfDate(String asOfDate) {
+        this.asOfDate = asOfDate;
     }
 
     @Override
     public String toString() {
         return "LocationStats{" +
-                "state='" + state + '\'' +
+                "disease=" + disease +
+                ", state='" + state + '\'' +
                 ", country='" + country + '\'' +
                 ", latestTotalCases=" + latestTotalCases +
                 '}';
     }
 
-
-	@Override
-	public int compareTo(ReportingLocationStatistics o) {
-		return o.diffFromPrevDay - this.diffFromPrevDay;
-	}
+    @Override
+    public int compareTo(ReportingLocationStatistics o) {
+        int otherDiff = o.diffFromPrevPeriod == null ? 0 : o.diffFromPrevPeriod;
+        int thisDiff = this.diffFromPrevPeriod == null ? 0 : this.diffFromPrevPeriod;
+        return otherDiff - thisDiff;
+    }
 }
